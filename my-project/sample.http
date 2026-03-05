@@ -1,0 +1,52 @@
+@baseUrl = http://localhost:3111
+@contentType = application/json
+
+### 0) サーバ起動確認（空データ想定）
+GET {{baseUrl}}/tickets
+
+### 1) チケット作成（正常系）
+# @name createTicket
+POST {{baseUrl}}/tickets
+Content-Type: {{contentType}}
+
+{
+  "title": "Payment failed on checkout",
+  "description": "Customer reports card payment fails with error code PMT-402.",
+  "priority": "high",
+  "customerEmail": "customer@example.com"
+}
+
+### 2) 一覧確認（auto-triage 結果の反映確認）
+GET {{baseUrl}}/tickets
+
+### 3) 手動トリアージ（HTTPトリガー確認）
+POST {{baseUrl}}/tickets/triage
+Content-Type: {{contentType}}
+
+{
+  "ticketId": "TKT-1772723527561-e4a8w",
+  "assignee": "support-jp-team",
+  "priority": "critical"
+}
+
+### 4) 手動エスカレーション（HTTPトリガー確認）
+POST {{baseUrl}}/tickets/escalate
+Content-Type: {{contentType}}
+
+{
+  "ticketId": "TKT-1772723527561-e4a8w",
+  "reason": "VIP customer impact, immediate engineering attention required"
+}
+
+### 5) 最終一覧確認（assignee/escalation情報の反映確認）
+GET {{baseUrl}}/tickets
+
+### 6) バリデーションエラー確認（異常系）
+POST {{baseUrl}}/tickets
+Content-Type: {{contentType}}
+
+{
+  "description": "Missing title should fail",
+  "priority": "medium",
+  "customerEmail": "invalid-case@example.com"
+}

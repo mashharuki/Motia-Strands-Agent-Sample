@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "motia": "1.0.0-rc.24",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  },
+  "name": "my-project-nodejs",
+  "scripts": {},
+  "type": "module",
+  "version": "0.0.1"
+}
