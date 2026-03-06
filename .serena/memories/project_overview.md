@@ -1,0 +1,4 @@
+- Purpose: Sample repository combining Motia backend framework with AWS Strands Agent style event-driven workflow.
+- Scope: Mixed runtime template where Node.js provides HTTP endpoints and Python provides queue/cron workers.
+- Main domain: Support ticket lifecycle (create, list, triage, notify, SLA monitor, escalate).
+- Entry workspace: `my-project/` (run engine from this directory).

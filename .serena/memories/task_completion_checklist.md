@@ -1,0 +1,6 @@
+- After code changes, at minimum:
+  - Ensure engine boots with `cd my-project && iii -c iii-config.yaml`.
+  - Hit HTTP endpoints if changed (`POST /tickets`, `GET /tickets`, optional triage/escalate APIs).
+  - Confirm queue/cron paths still process without runtime errors in logs.
+- If adding tooling later, update this checklist with lint/test/format commands.
+- Current risk: no explicit repo-level automated test/lint command is configured.

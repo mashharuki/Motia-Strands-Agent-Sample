@@ -1,0 +1,14 @@
+- Step files export/define `config` and `handler` as main entry points.
+- Naming:
+  - TypeScript step files: kebab-case with `.step.ts` suffix.
+  - Python step files: snake_case ending in `_step.py`.
+- TypeScript conventions:
+  - Use `as const satisfies StepConfig` for config typing.
+  - Validate HTTP schemas with Zod.
+  - Async handlers with destructured Motia context (`enqueue`, `logger`, `state`).
+- Python conventions:
+  - Use `FlowContext[Any]` and type hints.
+  - Use `ctx.match({...})` for multi-trigger routing.
+  - Prefer helper functions for shared logic (`_triage_ticket`, `_escalate_ticket`).
+- Logging: structured logs via `logger.info/warn/error` with metadata dict/object.
+- Comments/docstrings: concise, mostly English with some Japanese inline comments in this repo.

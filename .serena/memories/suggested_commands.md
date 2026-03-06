@@ -1,0 +1,13 @@
+- Prerequisite install (iii CLI):
+  - `curl -fsSL https://install.iii.dev/iii/main/install.sh | sh`
+- Run project:
+  - `cd my-project`
+  - `iii -c iii-config.yaml`
+- Node-only dev command defined in `iii-config.yaml`:
+  - `cd my-project/nodejs && npx motia dev`
+  - `cd my-project/nodejs && node dist/index-dev.js`
+- Python steps command defined in `iii-config.yaml`:
+  - `cd my-project/python && uv run motia run --dir steps`
+- Useful Darwin/macOS commands:
+  - `ls`, `cd`, `pwd`, `find`, `grep`, `rg`, `git status`, `git diff`.
+- Note: Dedicated lint/test/format scripts are not defined in current `package.json`/`pyproject.toml`.
