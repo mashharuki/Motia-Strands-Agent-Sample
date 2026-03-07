@@ -50,3 +50,20 @@ Content-Type: {{contentType}}
   "priority": "medium",
   "customerEmail": "invalid-case@example.com"
 }
+
+### 7) AIアシスタント（チケット文脈あり）
+POST {{baseUrl}}/tickets/ai-assistant
+Content-Type: {{contentType}}
+
+{
+  "prompt": "このチケットの次アクションを3つ提案して",
+  "ticketId": "TKT-1772723527561-e4a8w"
+}
+
+### 8) AIアシスタント（チケット文脈なし）
+POST {{baseUrl}}/tickets/ai-assistant
+Content-Type: {{contentType}}
+
+{
+  "prompt": "未対応のチケットで優先順位が高いものを要約して"
+}
