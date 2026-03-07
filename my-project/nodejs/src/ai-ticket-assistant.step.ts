@@ -14,6 +14,7 @@ const responseSchema = z.object({
   modelProvider: z.string(),
 });
 
+// AI アシスタント用のステップ定義
 export const config = {
   name: 'AiTicketAssistant',
   description: 'AI support assistant powered by Strands Agent SDK',
@@ -34,6 +35,12 @@ export const config = {
   enqueues: [],
 } as const satisfies StepConfig;
 
+/**
+ * AIアシスタント用のハンドラー関数
+ * @param request
+ * @param param1
+ * @returns
+ */
 export const handler: Handlers<typeof config> = async (
   request,
   { logger, state },
@@ -47,6 +54,7 @@ export const handler: Handlers<typeof config> = async (
     };
   }
 
+  // ツール定義: チケット情報の取得とオープンチケットのリスト化
   const getTicketTool = tool({
     name: 'get_ticket',
     description: 'Get one support ticket by ticketId',
@@ -60,6 +68,7 @@ export const handler: Handlers<typeof config> = async (
     },
   });
 
+  // ツール定義: オープンチケットのリスト化（最大10件）
   const listOpenTicketsTool = tool({
     name: 'list_open_tickets',
     description: 'List currently open support tickets (max 10)',
@@ -67,7 +76,9 @@ export const handler: Handlers<typeof config> = async (
       limit: z.number().int().min(1).max(10).optional().default(5),
     }),
     callback: async (input) => {
+      // ステート変数からチケットのリストを取得し、ステータスが「open」のチケットをフィルタリングして返す
       const tickets = await state.list<Record<string, unknown>>('tickets');
+      // チケットのステータスが「open」のものをフィルタリングし、指定された件数だけ返す
       const openTickets = tickets
         .filter((ticket) => ticket.status === 'open')
         .slice(0, input.limit);
@@ -75,6 +86,7 @@ export const handler: Handlers<typeof config> = async (
     },
   });
 
+  // エージェントの初期化: システムプロンプトとツールを設定
   const agent = new Agent({
     systemPrompt:
       'You are a concise support operations AI assistant. Use tools to reference real tickets before answering. Respond with practical next actions.',
@@ -86,6 +98,7 @@ export const handler: Handlers<typeof config> = async (
       ? await state.get<Record<string, unknown>>('tickets', ticketId)
       : null;
 
+  // エージェントへのプロンプト構築: ユーザープロンプト、特定のチケットID、参照されたチケットデータを含める
   const agentPrompt = [
     `User request: ${prompt}`,
     ticketId ? `Focused ticketId: ${ticketId}` : 'No specific ticketId provided.',
@@ -95,7 +108,9 @@ export const handler: Handlers<typeof config> = async (
     .join('\n');
 
   try {
+    // エージェントの呼び出し: 構築したプロンプトを渡して応答を取得
     const result = await agent.invoke(agentPrompt);
+    // ステート変数からチケットのリストを取得し、オープンチケットの数をカウント
     const tickets = await state.list<Record<string, unknown>>('tickets');
     const openTicketCount = tickets.filter((ticket) => ticket.status === 'open').length;
     const answer =
