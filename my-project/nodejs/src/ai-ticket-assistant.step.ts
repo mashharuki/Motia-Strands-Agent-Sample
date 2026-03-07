@@ -1,6 +1,6 @@
-import { Agent, tool } from '@strands-agents/sdk';
 import type { Handlers, StepConfig } from 'motia';
 import { z } from 'zod';
+import { agent } from './lib/ai/agent';
 
 const requestSchema = z.object({
   prompt: z.string().min(1),
@@ -53,45 +53,6 @@ export const handler: Handlers<typeof config> = async (
       body: { error: 'prompt is required' },
     };
   }
-
-  // ツール定義: チケット情報の取得とオープンチケットのリスト化
-  const getTicketTool = tool({
-    name: 'get_ticket',
-    description: 'Get one support ticket by ticketId',
-    inputSchema: z.object({ ticketId: z.string() }),
-    callback: async (input) => {
-      const ticket = await state.get<Record<string, unknown>>('tickets', input.ticketId);
-      if (!ticket) {
-        return `Ticket ${input.ticketId} not found`;
-      }
-      return JSON.stringify(ticket);
-    },
-  });
-
-  // ツール定義: オープンチケットのリスト化（最大10件）
-  const listOpenTicketsTool = tool({
-    name: 'list_open_tickets',
-    description: 'List currently open support tickets (max 10)',
-    inputSchema: z.object({
-      limit: z.number().int().min(1).max(10).optional().default(5),
-    }),
-    callback: async (input) => {
-      // ステート変数からチケットのリストを取得し、ステータスが「open」のチケットをフィルタリングして返す
-      const tickets = await state.list<Record<string, unknown>>('tickets');
-      // チケットのステータスが「open」のものをフィルタリングし、指定された件数だけ返す
-      const openTickets = tickets
-        .filter((ticket) => ticket.status === 'open')
-        .slice(0, input.limit);
-      return JSON.stringify(openTickets);
-    },
-  });
-
-  // エージェントの初期化: システムプロンプトとツールを設定
-  const agent = new Agent({
-    systemPrompt:
-      'You are a concise support operations AI assistant. Use tools to reference real tickets before answering. Respond with practical next actions.',
-    tools: [getTicketTool, listOpenTicketsTool],
-  });
 
   const referencedTicket =
     ticketId
