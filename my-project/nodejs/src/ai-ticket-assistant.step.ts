@@ -1,6 +1,6 @@
 import type { Handlers, StepConfig } from 'motia';
 import { z } from 'zod';
-import { agent } from './lib/ai/agent';
+import { createAgent } from './lib/ai/agent';
 
 const requestSchema = z.object({
   prompt: z.string().min(1),
@@ -69,6 +69,7 @@ export const handler: Handlers<typeof config> = async (
     .join('\n');
 
   try {
+    const agent = createAgent(state);
     // エージェントの呼び出し: 構築したプロンプトを渡して応答を取得
     const result = await agent.invoke(agentPrompt);
     // ステート変数からチケットのリストを取得し、オープンチケットの数をカウント

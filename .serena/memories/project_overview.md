@@ -1,4 +1,1 @@
-- Purpose: Sample repository combining Motia backend framework with AWS Strands Agent style event-driven workflow.
-- Scope: Mixed runtime template where Node.js provides HTTP endpoints and Python provides queue/cron workers.
-- Main domain: Support ticket lifecycle (create, list, triage, notify, SLA monitor, escalate).
-- Entry workspace: `my-project/` (run engine from this directory).
+Motia-Strands-Agent-Sample is a multi-part workspace: frontend ticket UI, Motia backend workflows (Node+Python), and AWS CDK infrastructure. Includes design artifacts and API samples for local testing. Refreshed on 2026-03-13.

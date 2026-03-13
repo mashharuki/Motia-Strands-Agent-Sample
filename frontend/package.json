@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "format": "bunx biome format --write .",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -15,6 +16,7 @@
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.6",
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",

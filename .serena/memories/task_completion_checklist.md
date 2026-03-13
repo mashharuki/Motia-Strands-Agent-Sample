@@ -1,6 +1,4 @@
-- After code changes, at minimum:
-  - Ensure engine boots with `cd my-project && iii -c iii-config.yaml`.
-  - Hit HTTP endpoints if changed (`POST /tickets`, `GET /tickets`, optional triage/escalate APIs).
-  - Confirm queue/cron paths still process without runtime errors in logs.
-- If adding tooling later, update this checklist with lint/test/format commands.
-- Current risk: no explicit repo-level automated test/lint command is configured.
+1) Verify API contract alignment between frontend and backend responses.
+2) Run frontend lint/build after UI or API client changes.
+3) For infra changes, run CDK synth and tests.
+4) Confirm Node + Python step compatibility in my-project.

@@ -1,8 +1,5 @@
-- Languages: TypeScript (Node.js) + Python 3.10+.
-- Node deps: `motia@1.0.0-rc.24`, `zod`, `typescript`, `@types/node`.
-- Python deps: `motia[otel]==1.0.0rc24`, `iii-sdk==0.2.0`, `pydantic>=2.0`.
-- Infra config: `my-project/iii-config.yaml`.
-- Key directories:
-  - `my-project/nodejs/src/`: HTTP step implementations (`create-ticket`, `list-tickets`).
-  - `my-project/python/steps/`: queue/cron/http Python steps (`triage`, `notify`, `sla_monitor`, `escalate`).
-  - `my-project/data/streams_store/`: local stream store.
+- frontend/: React 19 + Vite + TypeScript
+- my-project/nodejs/: Motia Node steps + Strands SDK
+- my-project/python/: Motia Python worker steps
+- cdk/: AWS CDK TypeScript app with tests
+- design/: UI spec and mockup assets

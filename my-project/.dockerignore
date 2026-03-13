@@ -1,0 +1,10 @@
+node_modules
+nodejs/node_modules
+nodejs/dist
+python/.venv
+python/__pycache__
+data/
+*.log
+.git
+.env
+sample.http

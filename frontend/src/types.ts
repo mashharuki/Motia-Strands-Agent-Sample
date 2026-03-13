@@ -2,9 +2,9 @@ export interface Ticket {
   ticketId: string;
   title: string;
   description: string;
-  priority: 'critical' | 'high' | 'medium' | 'low';
+  priority: "critical" | "high" | "medium" | "low";
   customerEmail: string;
-  status: 'open' | 'in-progress' | 'resolved' | 'closed' | 'escalated';
+  status: "open" | "in-progress" | "resolved" | "closed" | "escalated";
   assignee?: string;
   createdAt: string;
   updatedAt?: string;
@@ -23,8 +23,14 @@ export interface Ticket {
 export interface CreateTicketPayload {
   title: string;
   description: string;
-  priority: 'critical' | 'high' | 'medium' | 'low';
+  priority: "critical" | "high" | "medium" | "low";
   customerEmail: string;
+}
+
+export interface CreateTicketResponse {
+  ticketId: string;
+  status: string;
+  message: string;
 }
 
 export interface TriagePayload {
@@ -44,7 +50,10 @@ export interface AIAssistantPayload {
 }
 
 export interface AIAssistantResponse {
-  response: string;
+  answer: string;
+  referencedTicketId?: string | null;
+  openTicketCount?: number;
+  modelProvider?: string;
 }
 
-export type Page = 'dashboard' | 'tickets' | 'detail' | 'create' | 'ai';
+export type Page = "dashboard" | "tickets" | "detail" | "create" | "ai";
